@@ -1,6 +1,7 @@
 package com.shoshin.rickandmorty.fragments.characters
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.core.view.isInvisible
 import androidx.fragment.app.Fragment
@@ -39,12 +40,11 @@ class CharactersFragment: Fragment(R.layout.characters_fragment) {
         )
         setupCharacters()
         setupSwipeToRefresh()
-        viewModel.getCharacters()
     }
 
     private fun setupSwipeToRefresh() {
         binding.swipeRefreshLayout.setOnRefreshListener {
-            viewModel.getCharacters(true)
+            adapter.refresh()
         }
     }
 
@@ -56,15 +56,17 @@ class CharactersFragment: Fragment(R.layout.characters_fragment) {
         binding.reviewsRecyclerView.layoutManager = LinearLayoutManager(context)
         binding.reviewsRecyclerView.adapter = adapterWithLoadState
 
-        observeCharacters()
         observeLoadState()
         handleListVisibility()
+        observeCharacters()
     }
 
     private fun observeCharacters() {
-        viewModel.characters.observe(viewLifecycleOwner, { pagingData ->
-            adapter.submitData(viewLifecycleOwner.lifecycle, pagingData)
-        })
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.charactersFlow.collect { pagingData ->
+                adapter.submitData(viewLifecycleOwner.lifecycle, pagingData)
+            }
+        }
     }
 
     private fun observeLoadState() {

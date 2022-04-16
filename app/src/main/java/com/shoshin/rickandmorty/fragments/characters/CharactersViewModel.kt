@@ -11,6 +11,7 @@ import com.shoshin.domain.entities.CharacterDomain
 import com.shoshin.domain.repositories.ICharactersRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -18,22 +19,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CharactersViewModel @Inject constructor(
-    private val charactersRepository: ICharactersRepository,
-    private val dispatchers: DispatchersWrapper
+    charactersRepository: ICharactersRepository
 ): ViewModel() {
 
-    private val mutableCharacters = MutableLiveData<PagingData<CharacterDomain>>()
-    val characters: LiveData<PagingData<CharacterDomain>> = mutableCharacters
-
-    fun getCharacters(needRefresh: Boolean = false) {
-        viewModelScope.launch(dispatchers.io) {
-            if(characters.value == null || needRefresh) {
-                charactersRepository.getCharacters().cachedIn(viewModelScope).collectLatest { pagingData ->
-                    withContext(dispatchers.main) {
-                        mutableCharacters.value = pagingData
-                    }
-                }
-            }
-        }
-    }
+    val charactersFlow: Flow<PagingData<CharacterDomain>> =
+        charactersRepository.getCharacters().cachedIn(viewModelScope)
 }

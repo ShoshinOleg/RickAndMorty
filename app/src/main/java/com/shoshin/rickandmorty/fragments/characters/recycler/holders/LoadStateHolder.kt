@@ -20,8 +20,6 @@ class LoadStateHolder(
     }
 
     fun bind(loadState: LoadState) = with(binding) {
-        Log.e("loadState", "loadState=$loadState")
-        Log.e("swipeRefreshLayout", "swipeRefreshLayout=$swipeRefreshLayout")
         messageTextView.isVisible = loadState is LoadState.Error
         tryAgainButton.isVisible = loadState is LoadState.Error
         if (swipeRefreshLayout != null) {
