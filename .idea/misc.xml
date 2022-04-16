@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/79155/Desktop/AndroidTestTasks/Appricot/RickAndMorty/app/src/main/res/layout/character_holder.xml" value="0.1" />
+        <entry key="..\:/Users/79155/Desktop/AndroidTestTasks/Appricot/RickAndMorty/app/src/main/res/layout/characters_fragment.xml" value="0.1" />
         <entry key="..\:/Users/79155/Desktop/AndroidTestTasks/Appricot/RickAndMorty/app/src/main/res/layout/load_state_holder.xml" value="0.1" />
       </map>
     </option>
