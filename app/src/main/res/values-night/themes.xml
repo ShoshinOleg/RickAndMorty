@@ -19,10 +19,10 @@
 
     <style name="AppSplashTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="android:windowBackground">@drawable/splash_screen</item>
-        <item name="background">@color/backgroundNight</item>
-        <item name="android:colorPrimary">@color/backgroundNight</item>
-        <item name="colorPrimary">@color/backgroundNight</item>
-        <item name="android:colorPrimaryDark">@color/backgroundNight</item>
-        <item name="colorPrimaryDark">@color/backgroundNight</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowTranslucentNavigation">true</item>
     </style>
 </resources>
