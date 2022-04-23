@@ -8,6 +8,7 @@ import com.shoshin.domain.common.Reaction
 import com.shoshin.domain.common.dispatchers.DispatchersWrapper
 import com.shoshin.domain.entities.CharacterDomain
 import com.shoshin.domain.repositories.ICharactersRepository
+import com.shoshin.domain.usecases.interfaces.IGetCharacterUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -16,7 +17,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CharacterViewModel @Inject constructor(
-    private val charactersRepository: ICharactersRepository,
+    private val getCharacterUseCase: IGetCharacterUseCase,
     private val dispatchers: DispatchersWrapper
 ): ViewModel() {
     private val mutableCharacter = MutableLiveData<Reaction<CharacterDomain>>()
@@ -24,7 +25,7 @@ class CharacterViewModel @Inject constructor(
 
     fun getCharacter(id: Int) {
         viewModelScope.launch(dispatchers.io) {
-            charactersRepository.getCharacter(id).collectLatest { reaction ->
+            getCharacterUseCase.getCharacter(id).collectLatest { reaction ->
                 withContext(dispatchers.main) {
                     mutableCharacter.value = reaction
                 }

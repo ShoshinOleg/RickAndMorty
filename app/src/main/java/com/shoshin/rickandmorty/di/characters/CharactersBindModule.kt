@@ -6,6 +6,10 @@ import com.shoshin.data.repositories.CharactersRepository
 import com.shoshin.data.sources.CharactersLocalSource
 import com.shoshin.data.sources.CharactersRemoteSource
 import com.shoshin.domain.repositories.ICharactersRepository
+import com.shoshin.domain.usecases.implementations.GetCharacterUseCase
+import com.shoshin.domain.usecases.implementations.GetCharactersUseCase
+import com.shoshin.domain.usecases.interfaces.IGetCharacterUseCase
+import com.shoshin.domain.usecases.interfaces.IGetCharactersUseCase
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -20,4 +24,8 @@ interface CharactersBindModule {
     fun bindCharacterRemoteSource(source: CharactersRemoteSource): ICharactersRemoteSource
     @Binds
     fun bindCharacterLocalSource(source: CharactersLocalSource): ICharactersLocalSource
+    @Binds
+    fun bindGetCharactersUseCase(useCase: GetCharactersUseCase): IGetCharactersUseCase
+    @Binds
+    fun bindGetCharacterUseCase(useCase: GetCharacterUseCase): IGetCharacterUseCase
 }

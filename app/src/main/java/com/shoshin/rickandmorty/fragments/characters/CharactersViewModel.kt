@@ -6,15 +6,16 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.shoshin.domain.entities.CharacterDomain
 import com.shoshin.domain.repositories.ICharactersRepository
+import com.shoshin.domain.usecases.interfaces.IGetCharactersUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 @HiltViewModel
 class CharactersViewModel @Inject constructor(
-    private val charactersRepository: ICharactersRepository
+    private val getCharactersUseCase: IGetCharactersUseCase
 ): ViewModel() {
 
     fun getCharacters(needRefresh: Boolean = false): Flow<PagingData<CharacterDomain>> =
-        charactersRepository.getCharacters(needRefresh).cachedIn(viewModelScope)
+        getCharactersUseCase.getCharacters(needRefresh).cachedIn(viewModelScope)
 }
