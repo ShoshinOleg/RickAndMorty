@@ -1,6 +1,6 @@
 package com.shoshin.data.interfaces.services
 
-import com.shoshin.data.entities.CharacterRemote
+import com.shoshin.data.remote.entities.CharacterRemote
 import com.shoshin.data.responses.CharactersResponse
 import retrofit2.http.GET
 import retrofit2.http.Path

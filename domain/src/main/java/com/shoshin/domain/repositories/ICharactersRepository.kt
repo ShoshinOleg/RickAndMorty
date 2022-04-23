@@ -6,6 +6,6 @@ import com.shoshin.domain.entities.CharacterDomain
 import kotlinx.coroutines.flow.Flow
 
 interface ICharactersRepository {
-    fun getCharacters(): Flow<PagingData<CharacterDomain>>
+    fun getCharacters(needRefresh: Boolean = false): Flow<PagingData<CharacterDomain>>
     fun getCharacter(id: Int): Flow<Reaction<CharacterDomain>>
 }

@@ -1,6 +1,6 @@
 package com.shoshin.data.responses
 
-import com.shoshin.data.entities.CharacterRemote
+import com.shoshin.data.remote.entities.CharacterRemote
 import com.shoshin.domain.common.Mapper
 
 class CharactersResponseToCharactersRemoteMapper :

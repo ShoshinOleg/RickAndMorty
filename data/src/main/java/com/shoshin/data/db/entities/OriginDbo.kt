@@ -1,6 +1,6 @@
-package com.shoshin.data.entities
+package com.shoshin.data.db.entities
 
-data class LocationRemote(
+data class OriginDbo(
     val name: String? = null,
     val url: String? = null
 )

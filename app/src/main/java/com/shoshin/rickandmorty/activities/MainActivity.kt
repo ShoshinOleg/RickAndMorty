@@ -1,7 +1,7 @@
 package com.shoshin.rickandmorty.activities
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.shoshin.rickandmorty.R
 import dagger.hilt.android.AndroidEntryPoint
 

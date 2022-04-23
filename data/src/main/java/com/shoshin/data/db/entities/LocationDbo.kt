@@ -1,6 +1,6 @@
-package com.shoshin.domain.entities
+package com.shoshin.data.db.entities
 
-data class Location(
+data class LocationDbo(
     val name: String? = null,
     val url: String? = null
 )

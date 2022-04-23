@@ -1,6 +1,6 @@
 package com.shoshin.data.entities
 
-data class OriginRemote(
+class OriginData(
     val name: String? = null,
     val url: String? = null
 )

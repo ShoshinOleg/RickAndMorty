@@ -11,6 +11,6 @@ data class CharacterDomain(
     val type: String? = null,
     val url: String? = null,
     val status: String? = null,
-    val origin: Origin? = null,
-    val location: Location? = null
+    val origin: OriginDomain? = null,
+    val location: LocationDomain? = null
 )

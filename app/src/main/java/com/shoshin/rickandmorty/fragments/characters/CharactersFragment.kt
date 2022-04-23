@@ -1,9 +1,9 @@
 package com.shoshin.rickandmorty.fragments.characters
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.core.view.isInvisible
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -20,6 +20,7 @@ import com.shoshin.rickandmorty.fragments.characters.recycler.adapters.DefaultLo
 import com.shoshin.rickandmorty.fragments.characters.recycler.holders.LoadStateHolder
 import com.shoshin.rickandmorty.fragments.characters.recycler.holders.TryAgainAction
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -30,6 +31,7 @@ class CharactersFragment: Fragment(R.layout.characters_fragment) {
     private val viewModel: CharactersViewModel by viewModels()
     private var adapter = CharacterAdapter(::onCharacterClick)
     private var mainLoadStateHolder: LoadStateHolder? = null
+    private var charactersJob: Job? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -38,13 +40,14 @@ class CharactersFragment: Fragment(R.layout.characters_fragment) {
             adapter::retry,
             binding.swipeRefreshLayout
         )
+        binding.reviewsRecyclerView.isVisible = true
         setupCharacters()
         setupSwipeToRefresh()
     }
 
     private fun setupSwipeToRefresh() {
         binding.swipeRefreshLayout.setOnRefreshListener {
-            adapter.refresh()
+            subscribeNewCharacters(true)
         }
     }
 
@@ -58,12 +61,13 @@ class CharactersFragment: Fragment(R.layout.characters_fragment) {
 
         observeLoadState()
         handleListVisibility()
-        observeCharacters()
+        subscribeNewCharacters()
     }
 
-    private fun observeCharacters() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.charactersFlow.collect { pagingData ->
+    private fun subscribeNewCharacters(needRefresh: Boolean = false) {
+        charactersJob?.cancel()
+        charactersJob = viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.getCharacters(needRefresh).collect { pagingData ->
                 adapter.submitData(viewLifecycleOwner.lifecycle, pagingData)
             }
         }
@@ -81,6 +85,7 @@ class CharactersFragment: Fragment(R.layout.characters_fragment) {
         adapter.loadStateFlow.map { it.refresh }
             .simpleScan(count = 3)
             .collectLatest { (beforePrevious, previous, current) ->
+                binding.reviewsRecyclerView.isVisible = true
                 binding.reviewsRecyclerView.isInvisible = current is LoadState.Error
                         || previous is LoadState.Error
                         || (beforePrevious is LoadState.Error && previous is LoadState.NotLoading

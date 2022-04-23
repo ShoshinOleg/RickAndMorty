@@ -1,6 +1,5 @@
 package com.shoshin.rickandmorty.fragments.characters.recycler.holders
 
-import android.util.Log
 import androidx.core.view.isVisible
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.RecyclerView

@@ -1,14 +1,18 @@
 package com.shoshin.data.sources
 
-import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
+import com.shoshin.data.entities.CharacterData
+import com.shoshin.data.interfaces.sources.ICharactersLocalSource
 import com.shoshin.data.interfaces.sources.ICharactersRemoteSource
+import com.shoshin.domain.common.Mapper
 import com.shoshin.domain.entities.CharacterDomain
 import javax.inject.Inject
 
 class CharactersPagingSource @Inject constructor(
-    private val charactersRemoteSource: ICharactersRemoteSource
+    private val charactersLocalSource: ICharactersLocalSource,
+    private val charactersRemoteSource: ICharactersRemoteSource,
+    private val dataToDomainMapper: Mapper<CharacterData, CharacterDomain>
 ): PagingSource<Int, CharacterDomain>() {
 
     companion object {
@@ -26,9 +30,17 @@ class CharactersPagingSource @Inject constructor(
         val pageIndex = params.key ?: FIRST_PAGE_INDEX
 
         return try {
-            val characters = charactersRemoteSource.getCharacters(pageIndex)
+            val localCharacters = charactersLocalSource.getCharacters(pageIndex)
+            val characters: List<CharacterData> = if (localCharacters.isEmpty()) {
+                val characters = charactersRemoteSource.getCharacters(pageIndex)
+                charactersLocalSource.insertAll(characters, pageIndex)
+                characters
+            } else {
+                localCharacters
+            }
+
             LoadResult.Page(
-                data = characters,
+                data = dataToDomainMapper.map(characters),
                 prevKey = if(pageIndex == FIRST_PAGE_INDEX) null else pageIndex - 1,
                 nextKey = if(characters.size == PAGE_SIZE) pageIndex + 1 else null
             )
