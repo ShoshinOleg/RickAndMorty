@@ -20,7 +20,7 @@ class CharactersViewModel @Inject constructor(
 
     fun getCharacters(needRefresh: Boolean = false): Flow<PagingData<CharacterDomain>> {
         if (needRefresh || characters == null) {
-            characters = getCharactersUseCase.getCharacters(needRefresh)
+            characters = getCharactersUseCase.getCharacters(needRefresh).cachedIn(viewModelScope)
         }
         return characters!!
     }
