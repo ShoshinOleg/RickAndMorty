@@ -16,6 +16,12 @@ class CharactersViewModel @Inject constructor(
     private val getCharactersUseCase: IGetCharactersUseCase
 ): ViewModel() {
 
-    fun getCharacters(needRefresh: Boolean = false): Flow<PagingData<CharacterDomain>> =
-        getCharactersUseCase.getCharacters(needRefresh).cachedIn(viewModelScope)
+    private var characters: Flow<PagingData<CharacterDomain>>? = null
+
+    fun getCharacters(needRefresh: Boolean = false): Flow<PagingData<CharacterDomain>> {
+        if (needRefresh || characters != null) {
+            characters = getCharactersUseCase.getCharacters(needRefresh)
+        }
+        return characters!!
+    }
 }
