@@ -4,11 +4,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.shoshin.domain.entities.CharacterDomain
 import com.shoshin.rickandmorty.common.images.interfaces.ImageLoader
 import com.shoshin.rickandmorty.databinding.CharacterHolderBinding
-import dagger.hilt.android.EntryPointAccessors
-
-import dagger.hilt.InstallIn
-
 import dagger.hilt.EntryPoint
+import dagger.hilt.InstallIn
+import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.components.SingletonComponent
 
 

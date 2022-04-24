@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.shoshin.domain.entities.CharacterDomain
-import com.shoshin.domain.repositories.ICharactersRepository
 import com.shoshin.domain.usecases.interfaces.IGetCharactersUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow

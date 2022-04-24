@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import com.shoshin.domain.common.Reaction
 import com.shoshin.domain.common.dispatchers.DispatchersWrapper
 import com.shoshin.domain.entities.CharacterDomain
-import com.shoshin.domain.repositories.ICharactersRepository
 import com.shoshin.domain.usecases.interfaces.IGetCharacterUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest

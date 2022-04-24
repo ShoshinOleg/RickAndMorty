@@ -10,13 +10,9 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.shoshin.domain.common.Reaction
 import com.shoshin.domain.entities.CharacterDomain
 import com.shoshin.rickandmorty.R
-import com.shoshin.rickandmorty.common.argument
 import com.shoshin.rickandmorty.common.images.interfaces.ImageLoader
 import com.shoshin.rickandmorty.databinding.CharacterFragmentBinding
-import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.EntryPointAccessors
-import dagger.hilt.android.scopes.FragmentScoped
 import javax.inject.Inject
 
 @AndroidEntryPoint

@@ -1,7 +1,9 @@
 package com.shoshin.rickandmorty.di
 
 import android.content.Context
-import com.shoshin.rickandmorty.common.images.PicassoImageLoader
+import com.bumptech.glide.Glide
+import com.bumptech.glide.RequestManager
+import com.shoshin.rickandmorty.common.images.GlideImageLoader
 import com.shoshin.rickandmorty.common.images.interfaces.ImageLoader
 import com.squareup.picasso.Picasso
 import dagger.Module
@@ -19,5 +21,9 @@ class ImageLoaderModule {
         Picasso.Builder(context).build()
 
     @Provides
-    fun provideImageLoader(picasso: Picasso): ImageLoader = PicassoImageLoader(picasso)
+    fun provideGlide(@ApplicationContext context: Context): RequestManager =
+        Glide.with(context)
+
+    @Provides
+    fun provideImageLoader(glide: RequestManager): ImageLoader = GlideImageLoader(glide)
 }
