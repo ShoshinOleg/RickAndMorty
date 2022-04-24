@@ -23,8 +23,8 @@
         tools:layout="@layout/character_fragment"
         >
         <argument
-            android:name="characterId"
-            app:argType="integer"
+            android:name="character"
+            app:argType="com.shoshin.domain.entities.CharacterDomain"
             app:nullable="false"
             />
     </fragment>

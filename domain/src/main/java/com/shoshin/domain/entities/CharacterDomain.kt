@@ -1,7 +1,9 @@
 package com.shoshin.domain.entities
 
+import java.io.Serializable
+
 data class CharacterDomain(
-    val id: Int? = null,
+    val id: Int,
     val image: String? = null,
     val gender: String? = null,
     val species: String? = null,
@@ -13,4 +15,4 @@ data class CharacterDomain(
     val status: String? = null,
     val origin: OriginDomain? = null,
     val location: LocationDomain? = null
-)
+): Serializable

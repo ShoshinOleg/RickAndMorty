@@ -42,6 +42,8 @@ class CharactersFragment: Fragment(R.layout.characters_fragment) {
         )
         binding.reviewsRecyclerView.isVisible = true
         setupCharacters()
+        if(savedInstanceState == null)
+            subscribeNewCharacters()
         setupSwipeToRefresh()
     }
 
@@ -61,7 +63,6 @@ class CharactersFragment: Fragment(R.layout.characters_fragment) {
 
         observeLoadState()
         handleListVisibility()
-        subscribeNewCharacters()
     }
 
     private fun subscribeNewCharacters(needRefresh: Boolean = false) {
@@ -94,9 +95,7 @@ class CharactersFragment: Fragment(R.layout.characters_fragment) {
     }
 
     private fun onCharacterClick(character: CharacterDomain) {
-        if(character.id != null) {
-            val directions = CharactersFragmentDirections.toCharacter(character.id!!)
-            findNavController().navigate(directions)
-        }
+        val directions = CharactersFragmentDirections.toCharacter(character)
+        findNavController().navigate(directions)
     }
 }
