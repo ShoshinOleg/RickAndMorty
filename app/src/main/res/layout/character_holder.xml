@@ -10,6 +10,7 @@
         android:layout_width="140dp"
         android:layout_height="140dp"
         android:scaleType="centerCrop"
+        android:background="@drawable/rounded_corners"
 
         android:layout_marginTop="8dp"
         android:layout_marginStart="4dp"

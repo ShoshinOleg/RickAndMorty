@@ -10,15 +10,21 @@ import com.shoshin.domain.common.Reaction
 import com.shoshin.domain.entities.CharacterDomain
 import com.shoshin.rickandmorty.R
 import com.shoshin.rickandmorty.common.argument
+import com.shoshin.rickandmorty.common.images.interfaces.ImageLoader
 import com.shoshin.rickandmorty.databinding.CharacterFragmentBinding
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.EntryPointAccessors
+import dagger.hilt.android.scopes.FragmentScoped
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class CharacterFragment: Fragment(R.layout.character_fragment) {
     private val binding by viewBinding(CharacterFragmentBinding::bind)
     private val viewModel: CharacterViewModel by viewModels()
     private val characterId: Int by argument()
+    @Inject
+    lateinit var imageLoader: ImageLoader
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -52,11 +58,7 @@ class CharacterFragment: Fragment(R.layout.character_fragment) {
         binding.status.text = context?.getString(R.string.status, character.status ?: "")
         binding.location.text = context?.getString(R.string.status, character.location?.name ?: "")
 
-        if(character.image != null && character.image!!.isNotEmpty()) {
-            Picasso.get()
-                .load(character.image)
-                .into(binding.image)
-        }
+        imageLoader.load(binding.image, character.image)
 
         binding.loadStateHolder.errorLayout.isVisible = false
         binding.loadStateHolder.progressBar.isVisible = false
